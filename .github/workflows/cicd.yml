@@ -34,7 +34,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/nikhilgadge/vidly-backend:${{ github.run_id }}
+          tags: ghcr.io/nikhilgadge/vidly-backend-img:${{ github.run_id }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
         
