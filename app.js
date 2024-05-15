@@ -8,5 +8,5 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/", homeRoutes);
 app.use("/api/movies", movieRoutes);
-//added comment
+//added comment.
 module.exports = app;
