@@ -35,6 +35,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ghcr.io/nikhilgadge/vidly-be-img:${{ github.run_id }}
+          target: test
           cache-from: type=gha
           cache-to: type=gha,mode=max
         
