@@ -37,7 +37,6 @@ jobs:
           tags: ghcr.io/nikhilgadge/vidly-backend:${{ github.run_id }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          target: test
         
 
       - name: Test with Docker
