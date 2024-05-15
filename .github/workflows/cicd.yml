@@ -26,5 +26,11 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: true
-          tags: nikhilgadge/vidly-backend:latest
+          push: false
+          tags: nikhilgadge/vidly-backend:${{ github.run_id }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Test with Docker
+        run: docker run nikhilgadge/vidly-backend:${{ github.run_id }}
+          
