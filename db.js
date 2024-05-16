@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const dbUrl = process.env.MONGO_PASSWORD ? `mongodb+srv://nikgadge111:${process.env.MONGO_PASSWORD}@cluster-vidly.g6ymjpz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster-vidly` : "mongodb://localhost/vidly";
+const dbUrl = process.env.MONGO_PASSWORD ? `mongodb+srv://nikgadge111:${process.env.MONGO_PASSWORD}@cluster-vidly.g6ymjpz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster-vidly` : "mongodb://localhost:27017/vidly";
 const connect = async () => {
   await mongoose.connect(dbUrl, {
     useUnifiedTopology: true,
