@@ -17,8 +17,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: build & test
-        run: |
-          docker-compose up
-          npm run test
+      - name: build
+        run: docker-compose up
+
+      - name: test
+        run: npm run test
+
+      - name: clear
+        run: docker-compose down
+        
           
