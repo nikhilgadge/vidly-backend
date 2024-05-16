@@ -21,7 +21,7 @@ jobs:
         run: docker-compose up -d
 
       - name: test
-        run: docker-compose run --rm backend npm test
+        run: docker-compose run --rm -d backend npm test
 
       - name: clear
         run: docker-compose down
