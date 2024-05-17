@@ -1,17 +1,11 @@
-name: Deploy backend
+name: CI
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
 
 jobs:
   build: 
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: read
-      packages: write # needed to push docker image to ghcr.io
       
     steps:
       - name: Checkout

@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  db:
+      image: mongo:4.0-xenial
+      ports:
+        - 27017:27017
+      volumes:
+        - vidly:/data/db
+  
+  backend: 
+    depends_on: 
+      - db
+    image: nikhilgadge/vidly-backend:v5
+    ports: 
+      - 3001:3001
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment: 
+      DB_URL: mongodb://db/vidly
+
+  frontend:
+      image: nikhilgadge/vidly-frontend:v10
+      ports:
+        - 80:80
+      depends_on: 
+        - backend
+      deploy:
+        replicas: 1
+        restart_policy:
+          condition: on-failure
+      environment:
+        REACT_APP_API_URL : http://backend/api
+
+
+volumes:
+  vidly:
