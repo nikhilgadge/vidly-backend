@@ -45,7 +45,7 @@ jobs:
               fi
 
       - name: Pull docker-compose.prod.yml from EC2
-        uses: appleboy/scp-action@v0.1.0
+        uses: appleboy/scp-action@master
         with:
             host: ${{ secrets.SSH_HOST }}
             username: ${{ secrets.SSH_USERNAME }}
