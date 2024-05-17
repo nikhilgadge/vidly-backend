@@ -37,7 +37,7 @@ jobs:
             host: ${{ secrets.SSH_HOST }}
             username: ${{ secrets.SSH_USERNAME }}
             key: ${{ secrets.SSH_PRIVATE_KEY }}
-            source: /home/ec2-user/deploy/docker-compose.prod.yml
+            source: ./deploy/docker-compose.prod.yml
             target: ./docker-compose.prod.yml
     
       - name: Update image tag in docker-compose.prod.yml
