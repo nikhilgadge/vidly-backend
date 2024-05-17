@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       # - name: Set up Docker Buildx
       #   uses: docker/setup-buildx-action@v3
@@ -46,14 +46,14 @@ jobs:
               fi
 
       - name: Pull docker-compose.prod.yml from EC2
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v0.1.4
         with:
             host: ${{ secrets.SSH_HOST }}
             username: ${{ secrets.SSH_USERNAME }}
             key: ${{ secrets.SSH_PRIVATE_KEY }}
             port: ${{ secrets.SSH_PORT || 22 }}
             source: /home/ec2-user/deploy/docker-compose.prod.yml
-            target: .
+            target: ./docker-compose.prod.yml
     
       - name: Update image tag in docker-compose.prod.yml
         run: |
