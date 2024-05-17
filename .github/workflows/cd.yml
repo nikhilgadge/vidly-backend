@@ -39,6 +39,7 @@ jobs:
             key: ${{ secrets.SSH_PRIVATE_KEY }}
             script: |
               ls -la /home/ec2-user/deploy/
+              cat /home/ec2-user/deploy/docker-compose.prod.yml
               if [ ! -f /home/ec2-user/deploy/docker-compose.prod.yml ]; then
                 echo "docker-compose.prod.yml does not exist at specified path" >&2
                 exit 1
