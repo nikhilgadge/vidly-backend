@@ -39,8 +39,6 @@ jobs:
             key: ${{ secrets.SSH_PRIVATE_KEY }}
             script: |
               sed -i 's|image: nikhilgadge/vidly-backend:.*|image: '"nikhilgadge/vidly-backend:${{ github.run_id }}"'|' /home/ec2-user/deploy/docker-compose.prod.yml
-              sed -i 's|MONGO_PASSWORD:.* |MONGO_PASSWORD: '"${{ secrets.MONGO_PASSWORD }}"'|' /home/ec2-user/deploy/docker-compose.prod.yml
-
               cat /home/ec2-user/deploy/docker-compose.prod.yml # Optional: print the file to check the changes
               docker stack deploy -c /home/ec2-user/deploy/docker-compose.prod.yml vidly
   
