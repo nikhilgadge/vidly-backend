@@ -31,55 +31,16 @@ jobs:
       #     cache-from: type=gha
       #     cache-to: type=gha,mode=max
 
-      - name: SSH to EC2 to verify docker-compose..prod.yml exists
+      - name: SSH to EC2 to deploy stack 
         uses: appleboy/ssh-action@master
         with:
             host: ${{ secrets.SSH_HOST }}
             username: ${{ secrets.SSH_USERNAME }}
             key: ${{ secrets.SSH_PRIVATE_KEY }}
             script: |
-              ls -la /home/ec2-user/deploy/
-              cat /home/ec2-user/deploy/docker-compose.prod.yml
-              if [ ! -f /home/ec2-user/deploy/docker-compose.prod.yml ]; then
-                echo "docker-compose.prod.yml does not exist at specified path" >&2
-                exit 1
-              fi
-
-      - name: Pull docker-compose.prod.yml from EC2
-        uses: appleboy/scp-action@v0.1.4
-        with:
-            host: ${{ secrets.SSH_HOST }}
-            username: ${{ secrets.SSH_USERNAME }}
-            key: ${{ secrets.SSH_PRIVATE_KEY }}
-            port: ${{ secrets.SSH_PORT || 22 }}
-            source: /home/ec2-user/deploy/docker-compose.prod.yml
-            target: ./docker-compose.prod.yml
-    
-      - name: Update image tag in docker-compose.prod.yml
-        run: |
-            sed -i 's|image: nikhilgadge/vidly-backend:.*|image: '"nikhilgadge/vidly-backend:${{ github.run_id }}"'|' docker-compose.prod.yml
-            cat docker-compose.prod.yml  # Optional: print the file to check the changes
-    
-      # - name: Save updated docker-compose.yml back to EC2
-      #   uses: appleboy/scp-action@v0.1.0
-      #   with:
-      #       host: ${{ secrets.SSH_HOST }}
-      #       username: ${{ secrets.SSH_USERNAME }}
-      #       key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #       source: ./docker-compose.yml
-      #       target: /path/to/remote/docker-compose.yml
-    
-      # - name: SSH to Docker Swarm Manager and deploy
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #       host: ${{ secrets.SSH_HOST }}
-      #       username: ${{ secrets.SSH_USERNAME }}
-      #       key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #       script: |
-      #         echo "$DOCKER_USERNAME $DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
-      #         docker stack deploy -c /path/to/remote/docker-compose.yml my_stack
-
-
+              sed -i 's|image: nikhilgadge/vidly-backend:.*|image: '"nikhilgadge/vidly-backend:${{ github.run_id }}"'|' /home/ec2-user/deploy/docker-compose.prod.yml
+              cat /home/ec2-user/deploy/docker-compose.prod.yml # Optional: print the file to check the changes
+              docker stack deploy -c /home/ec2-user/deploy/docker-compose.prod.yml vidly
   
 
   
